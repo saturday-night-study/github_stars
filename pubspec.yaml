@@ -13,6 +13,8 @@ dependencies:
   firebase_core: ^1.19.1
   firebase_auth: ^3.4.1
   github_sign_in: ^0.0.5-dev.4
+  fluttertoast: ^8.0.9
+  loading_indicator: ^3.1.0
 
 dev_dependencies:
   flutter_test:
@@ -21,3 +23,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/

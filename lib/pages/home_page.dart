@@ -1,4 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:github_stars/github/oauth_helper.dart';
+import 'package:github_stars/theme.dart';
+import 'package:github_stars/widgets/toast.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -8,11 +13,99 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String? _token;
+  bool get _hasToken => _token != null;
+
+  bool _isGithubSigninProgress = false;
+  set isGithubSigninProgress(bool newValue) {
+    setState(() {
+      _isGithubSigninProgress = newValue;
+    });
+  }
+
+  void _handleSigninWithGithub() async {
+    isGithubSigninProgress = true;
+    final token = await GithubOAuthHelper.signInWithGitHub(context);
+    // await Future.delayed(const Duration(seconds: 3));
+    isGithubSigninProgress = false;
+
+    if (token == null) {
+      Toast.show("Github 인증에 실패했습니다.");
+      return;
+    }
+
+    setState(() {
+      _token = token;
+    });
+
+    Toast.show("Github 인증에 성공했습니다.");
+  }
+
+  void _handlePrintToken() {
+    print("token=[$_token]");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("GitHub Stars"),
+      appBar: _createAppBar(),
+      body: Center(
+        child: _createButtons(),
+      ),
+    );
+  }
+
+  AppBar _createAppBar() {
+    return AppBar(
+      title: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            "assets/images/github-icon.png",
+            width: 24,
+            height: 24,
+          ),
+          const SizedBox(width: 8),
+          const Text("GitHub Stars"),
+        ],
+      ),
+    );
+  }
+
+  Widget _createButtons() {
+    final signinButtonChild = _isGithubSigninProgress
+        ? const SizedBox(
+            width: 20,
+            height: 20,
+            child: LoadingIndicator(
+              indicatorType: Indicator.circleStrokeSpin,
+              colors: [primaryColor],
+              strokeWidth: 2,
+            ),
+          )
+        : const Text("GitHub signin test");
+
+    return SizedBox(
+      width: 200,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          IgnorePointer(
+            ignoring: _isGithubSigninProgress,
+            child: OutlinedButton(
+              onPressed: _handleSigninWithGithub,
+              child: signinButtonChild,
+            ),
+          ),
+          Visibility(
+            visible: _hasToken,
+            child: OutlinedButton(
+              onPressed: _handlePrintToken,
+              child: const Text("Print token"),
+            ),
+          ),
+        ],
       ),
     );
   }

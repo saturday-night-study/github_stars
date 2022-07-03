@@ -36,12 +36,12 @@ vi ~/.zshrc
 
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 
-source ~/zshrc
+source ~/.zshrc
 
 # Firebase Flutter 프로젝트 등록
 cd github_stars
 
-flutterfire configure --project=github-stars-a4179
+flutterfire configure --project=YourProjectId
 ```
 
 * 설정 원하는 플랫폼 선택 후 Enter
