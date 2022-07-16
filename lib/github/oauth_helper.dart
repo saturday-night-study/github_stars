@@ -1,12 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:github_sign_in/github_sign_in.dart';
-import 'package:github_stars/github/github_config.dart';
+import 'package:github_stars/github/oauth_config.dart';
+import 'package:github_stars/models/token.dart';
 
 class GithubOAuthHelper {
   GithubOAuthHelper._internal();
 
-  static Future<String?> signInWithGitHub(BuildContext context) async {
+  static Future<Token> signInWithGitHub(BuildContext context) async {
     final GitHubSignIn gitHubSignIn = GitHubSignIn(
       clientId: clientId,
       clientSecret: clientSecret,
@@ -15,9 +16,9 @@ class GithubOAuthHelper {
 
     final result = await gitHubSignIn.signIn(context);
     if (result.status != GitHubSignInResultStatus.ok) {
-      return null;
+      return Token.empty();
     }
 
-    return result.token;
+    return Token.of(result.token);
   }
 }

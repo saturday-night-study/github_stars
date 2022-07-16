@@ -1,7 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:github_stars/github/oauth_helper.dart';
+import 'package:github_stars/models/token.dart';
 import 'package:github_stars/theme.dart';
+import 'package:github_stars/widgets/github_appbar.dart';
 import 'package:github_stars/widgets/toast.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
@@ -13,7 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String? _token;
+  Token? _token;
   bool get _hasToken => _token != null;
 
   bool _isGithubSigninProgress = false;
@@ -29,7 +30,7 @@ class _HomePageState extends State<HomePage> {
     // await Future.delayed(const Duration(seconds: 3));
     isGithubSigninProgress = false;
 
-    if (token == null) {
+    if (token.notExists) {
       Toast.show("Github 인증에 실패했습니다.");
       return;
     }
@@ -48,26 +49,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _createAppBar(),
+      appBar: const GithubAppBar(),
       body: Center(
         child: _createButtons(),
-      ),
-    );
-  }
-
-  AppBar _createAppBar() {
-    return AppBar(
-      title: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Image.asset(
-            "assets/images/github-icon.png",
-            width: 24,
-            height: 24,
-          ),
-          const SizedBox(width: 8),
-          const Text("GitHub Stars"),
-        ],
       ),
     );
   }
