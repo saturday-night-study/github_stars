@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:github_stars/pages/home_page.dart';
+import 'package:github_stars/pages/signin_page.dart';
 import 'package:github_stars/theme.dart';
 
 class GithubStarsApp extends StatelessWidget {
@@ -9,7 +9,7 @@ class GithubStarsApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: const SignInPage(),
       theme: theme,
     );
   }
