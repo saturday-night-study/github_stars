@@ -18,6 +18,7 @@ class GithubAppBar extends StatelessWidget with PreferredSizeWidget {
           const Text("GitHub Stars"),
         ],
       ),
+      elevation: 0,
     );
   }
 

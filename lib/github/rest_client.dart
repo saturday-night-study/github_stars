@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:github_stars/models/repository.dart';
 import 'package:github_stars/models/user.dart';
 import 'package:github_stars/service/current_user.dart';
 
@@ -29,6 +30,22 @@ class RestClient {
     } catch (e) {
       print(e);
       return null;
+    }
+  }
+
+  Future<List<Repository>> getRepositories() async {
+    try {
+      final response = await Dio().get(
+        _uri("user/repos?sort=updated"),
+        options: _options(CurrentUser().token),
+      );
+
+      final list = response.data as List<dynamic>;
+
+      return list.map((json) => Repository.fromJson(json)).toList();
+    } catch (e) {
+      print(e);
+      return List.empty();
     }
   }
 }

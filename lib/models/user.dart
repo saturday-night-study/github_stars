@@ -11,6 +11,8 @@ class User with BindHelper {
     location = getString(json, "location");
     email = getString(json, "email");
     bio = getString(json, "bio");
+    followers = getInt(json, "followers");
+    following = getInt(json, "following");
   }
 
   factory User.fromJson(dynamic json) {
@@ -26,6 +28,8 @@ class User with BindHelper {
   late final String location;
   late final String email;
   late final String bio;
+  late final int followers;
+  late final int following;
 
   @override
   String toString() {
@@ -39,6 +43,8 @@ class User with BindHelper {
     location: "$location",
     email: "$email",
     bio: "$bio",
+    followers: "$followers",
+    following: "$following",
 }""";
   }
 }

@@ -26,4 +26,17 @@ mixin BindHelper {
 
     return json[key] as int;
   }
+
+  DateTime? getDateTime(Map<String, dynamic> json, String key) {
+    if (hasNot(json, key)) {
+      return null;
+    }
+
+    try {
+      final tmp = json[key] as String;
+      return DateTime.parse(tmp);
+    } on Exception {
+      return null;
+    }
+  }
 }
