@@ -10,6 +10,9 @@ class Repository with BindHelper {
     stars = getInt(json, "stargazers_count");
     forks = getInt(json, "forks_count");
     updateAt = getDateTime(json, "updated_at");
+
+    final owner = getMap(json, "owner");
+    ownerId = getString(owner, "login");
   }
 
   factory Repository.fromJson(dynamic json) {
@@ -24,6 +27,7 @@ class Repository with BindHelper {
   late final int stars;
   late final int forks;
   late final DateTime? updateAt;
+  late final String ownerId;
 
   @override
   String toString() {
@@ -36,6 +40,7 @@ class Repository with BindHelper {
     stars: "$stars",
     forks: "$forks",
     updateAt: "$updateAt",
+    ownerId: "$ownerId",
 }""";
   }
 }

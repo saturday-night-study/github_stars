@@ -20,7 +20,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   User? _user;
   List<Repository> _repositories = List.empty();
-  bool get isDataLoading => _user == null;
+  bool get _isDataLoading => _user == null;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _loadDatas() async {
     final results = await Future.wait([
       RestClient().getUser(),
-      RestClient().getRepositories(),
+      RestClient().getUserRepositories(),
     ]);
 
     final user = results[0] as User?;
@@ -150,7 +150,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _createUseProfile() {
-    if (isDataLoading) {
+    if (_isDataLoading) {
       return const SizedBox.shrink();
     }
 
@@ -165,7 +165,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _createProfileDisplay() {
-    if (isDataLoading) {
+    if (_isDataLoading) {
       return const SizedBox.shrink();
     }
 
@@ -211,7 +211,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _createBio() {
-    if (isDataLoading) {
+    if (_isDataLoading) {
       return const SizedBox.shrink();
     }
 
@@ -235,7 +235,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _createEtcInfo() {
-    if (isDataLoading) {
+    if (_isDataLoading) {
       return const SizedBox.shrink();
     }
 
@@ -277,7 +277,7 @@ class _ProfilePageState extends State<ProfilePage> {
     required String text,
     bool isEmphasis = false,
   }) {
-    if (isDataLoading) {
+    if (_isDataLoading) {
       return const SizedBox.shrink();
     }
 
@@ -305,7 +305,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _createFollowInfo() {
-    if (isDataLoading) {
+    if (_isDataLoading) {
       return const SizedBox.shrink();
     }
 

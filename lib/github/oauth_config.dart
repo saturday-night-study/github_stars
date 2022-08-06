@@ -1,4 +1,4 @@
-const clientId = "7119ee0b709cbef49b2b";
-const clientSecret = "d46f7d1e0a248351fd563688ce8a47c68755a78e";
+const clientId = "Iv1.358e3a1ff3f4008a";
+const clientSecret = "cb4f2f4a1cceab5c96d6847150f65e7dfef14758";
 const callbackUrl =
     "https://github-stars-69d31.firebaseapp.com/__/auth/handler";

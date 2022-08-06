@@ -39,4 +39,17 @@ mixin BindHelper {
       return null;
     }
   }
+
+  Map<String, dynamic> getMap(Map<String, dynamic> json, String key) {
+    if (hasNot(json, key)) {
+      return <String, dynamic>{};
+    }
+
+    final value = json[key];
+    if (value == null) {
+      return <String, dynamic>{};
+    }
+
+    return json[key] as Map<String, dynamic>;
+  }
 }
